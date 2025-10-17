@@ -1,0 +1,6 @@
+{
+  "appId": "com.tokyotech.app",
+  "appName": "tokyotech",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}
