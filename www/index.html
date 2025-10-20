@@ -6,99 +6,32 @@
 <title>Tokyotech</title>
 <link rel="stylesheet" href="css/style.css"/>
 <style>
-/* --- Diseño adaptable para móviles --- */
-:root {
-  --green: #2C9719;
-  --dark: #111;
-  --card: #222;
-}
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #1F1F21;
-  color: #fff;
-}
-.top-bar {
-  background: var(--green);
-  text-align: center;
-  padding: 8px;
-  font-weight: 700;
-}
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px;
-}
-.logo {
-  height: 48px;
-}
-.hero {
-  background: url("imagenes/canva/FondoPantallaInicial.png") center/cover no-repeat;
-  height: 40vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.overlay {
-  text-align: center;
-}
-.login-container {
-  background: var(--card);
-  margin: 16px auto;
-  padding: 18px;
-  border-radius: 12px;
-  max-width: 420px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
-}
-.login-container h2 {
-  margin-bottom: 6px;
-}
-input[type="email"], input[type="password"], input[type="text"] {
-  width: 100%;
-  padding: 12px;
-  margin: 8px 0;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-}
-.btn {
-  background: var(--green);
-  color: white;
-  padding: 10px 14px;
-  border-radius: 8px;
-  border: none;
-  font-weight: 700;
-  cursor: pointer;
-  width: 100%;
-}
-.small-link {
-  text-align: center;
-  margin-top: 8px;
-}
-#mensaje-error {
-  color: #ff6b6b;
-  margin-top: 8px;
-  text-align: center;
-}
-/* responsive */
-@media (min-width:700px){
-  .hero{height:60vh;}
-}
+:root{--green:#2C9719;--dark:#111;--card:#222}
+body{margin:0;font-family:Arial;background:#1F1F21;color:#fff}
+.top-bar{background:var(--green);text-align:center;padding:8px;font-weight:700}
+.navbar{display:flex;justify-content:space-between;align-items:center;padding:12px}
+.logo{height:48px}
+.hero{background:url("imagenes/canva/FondoPantallaInicial.png") center/cover no-repeat;height:40vh;display:flex;align-items:center;justify-content:center}
+.overlay{text-align:center}
+.login-container{background:var(--card);margin:16px auto;padding:18px;border-radius:12px;max-width:420px;box-shadow:0 6px 20px rgba(0,0,0,0.5)}
+.login-container h2{margin-bottom:6px}
+input[type="email"],input[type="password"],input[type="text"],input[type="tel"]{width:100%;padding:12px;margin:8px 0;border-radius:8px;border:1px solid #ccc;font-size:16px}
+.btn{background:var(--green);color:#fff;padding:10px 14px;border-radius:8px;border:none;font-weight:700;cursor:pointer;width:100%}
+.small-link{text-align:center;margin-top:8px}
+#mensaje-error{color:#ff6b6b;margin-top:8px;text-align:center}
+.password-container{position:relative}
+.toggle-pass{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:#ccc;cursor:pointer;font-size:14px}
+@media(min-width:700px){.hero{height:60vh}}
 </style>
 </head>
 <body>
 
-<!-- 🔝 Barra superior -->
 <div class="top-bar">BIENVENIDO A TOKYO TECH</div>
-
-<!-- 🔧 Navbar -->
 <nav class="navbar">
   <img src="imagenes/canva/LOGO VF.png" alt="logo" class="logo">
   <div></div>
 </nav>
 
-<!-- 🏠 Pantalla principal -->
 <section class="hero">
   <div class="overlay">
     <h1 style="font-size:1.6rem;margin:0">Bienvenido a Tokyotech</h1>
@@ -107,7 +40,6 @@ input[type="email"], input[type="password"], input[type="text"] {
   </div>
 </section>
 
-<!-- 🔐 LOGIN -->
 <section id="login-section">
   <div class="login-container" role="region" aria-label="login">
     <img src="imagenes/canva/LOGO VF.png" class="logo-login" style="width:88px;display:block;margin:0 auto 8px">
@@ -115,9 +47,13 @@ input[type="email"], input[type="password"], input[type="text"] {
 
     <form id="loginForm" autocomplete="on">
       <input id="correo" type="email" placeholder="Correo" required />
-      <input id="contrasena" type="password" placeholder="Contraseña" required />
+      <div class="password-container">
+        <input id="contrasena" type="password" placeholder="Contraseña" required />
+        <button type="button" class="toggle-pass" onclick="togglePassword('contrasena', this)">👁</button>
+      </div>
       <div style="display:flex;gap:8px;align-items:center">
-        <input id="captchaInput" type="text" placeholder="¿Cuánto es?" style="flex:1" required />
+        <label id="captchaLabel" style="min-width:120px"></label>
+        <input id="captchaInput" type="text" placeholder="Respuesta" style="flex:1" required />
         <button id="refreshCaptcha" type="button" style="padding:8px;border-radius:8px">↻</button>
       </div>
       <p id="mensaje-error"></p>
@@ -131,16 +67,27 @@ input[type="email"], input[type="password"], input[type="text"] {
   </div>
 </section>
 
-<!-- 🧾 Registro -->
+<!-- Modal de registro -->
 <div id="registerModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);align-items:center;justify-content:center;padding:12px">
   <div style="background:var(--card);padding:16px;border-radius:12px;max-width:420px;margin:0 auto">
     <h3>Crear cuenta</h3>
     <form id="registerForm">
-      <input id="regNombre" type="text" placeholder="Nombre completo" required />
-      <input id="regCorreo" type="email" placeholder="Correo" required />
-      <input id="regPassword" type="password" placeholder="Contraseña" required />
+      <input id="regNombre" type="text" placeholder="Nombre" required />
+      <input id="regApellido" type="text" placeholder="Apellido" required />
+      <input id="regCelular" type="tel" placeholder="Celular" required />
+      <input id="regDireccion" type="text" placeholder="Dirección" required />
+      <input id="regCorreo" type="email" placeholder="Correo electrónico" required />
+      <div class="password-container">
+        <input id="regPassword" type="password" placeholder="Contraseña" required />
+        <button type="button" class="toggle-pass" onclick="togglePassword('regPassword', this)">👁</button>
+      </div>
+      <div class="password-container">
+        <input id="regPassword2" type="password" placeholder="Repetir contraseña" required />
+        <button type="button" class="toggle-pass" onclick="togglePassword('regPassword2', this)">👁</button>
+      </div>
       <div style="display:flex;gap:8px;align-items:center">
-        <input id="regCaptchaInput" type="text" placeholder="Captcha (suma)" style="flex:1" required />
+        <label id="regCaptchaLabel" style="min-width:120px"></label>
+        <input id="regCaptchaInput" type="text" placeholder="Respuesta" style="flex:1" required />
         <button id="regRefresh" type="button">↻</button>
       </div>
       <p id="reg-message" style="color:#ff6b6b"></p>
@@ -150,72 +97,129 @@ input[type="email"], input[type="password"], input[type="text"] {
   </div>
 </div>
 
-<!-- 🔑 Recuperar contraseña -->
+<!-- Modal olvide contraseña -->
 <div id="forgotModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);align-items:center;justify-content:center;padding:12px">
   <div style="background:var(--card);padding:16px;border-radius:12px;max-width:420px;margin:0 auto">
     <h3>Recuperar contraseña</h3>
     <form id="forgotForm">
-      <input id="forgotCorreo" type="email" placeholder="Correo" required />
+      <input id="forgotCorreo" type="email" placeholder="Correo electrónico" required />
+      <div class="password-container">
+        <input id="forgotNueva" type="password" placeholder="Nueva contraseña" required />
+        <button type="button" class="toggle-pass" onclick="togglePassword('forgotNueva', this)">👁</button>
+      </div>
+      <div class="password-container">
+        <input id="forgotNueva2" type="password" placeholder="Repetir contraseña" required />
+        <button type="button" class="toggle-pass" onclick="togglePassword('forgotNueva2', this)">👁</button>
+      </div>
       <p id="forgot-message" style="color:#ff6b6b"></p>
-      <button class="btn" type="submit">Enviar enlace (simulado)</button>
+      <button class="btn" type="submit">Actualizar contraseña</button>
     </form>
     <button id="closeForgot" style="margin-top:8px;background:#444;color:#fff;padding:8px;border-radius:8px;border:none">Cerrar</button>
   </div>
 </div>
 
 <script>
-/* ============================
-   CONFIGURACIÓN DEL SERVIDOR
-============================ */
-const SERVER_URL = "http://192.168.20.166:3000"; // 🔧 cambia esta IP por la tuya local o por la URL del backend
+// IP del servidor
+const SERVER_URL = "http://192.168.20.166:3000";
 
-/* ============================
-   CAPTCHA SIMPLE (suma)
-============================ */
-function generarCaptcha() {
-  const a = Math.floor(Math.random() * 10);
-  const b = Math.floor(Math.random() * 10);
-  return { texto: `${a} + ${b}`, resultado: a + b };
+// Mostrar/ocultar contraseña
+function togglePassword(id, btn){
+  const input = document.getElementById(id);
+  if(input.type === "password"){
+    input.type = "text";
+    btn.textContent = "🙈";
+  } else {
+    input.type = "password";
+    btn.textContent = "👁";
+  }
 }
 
-/* ============================
-   LOGIN
-============================ */
-let captcha = generarCaptcha();
-const captchaInput = document.getElementById("captchaInput");
-captchaInput.placeholder = `¿Cuánto es ${captcha.texto}?`;
-document.getElementById("refreshCaptcha").addEventListener("click", () => {
-  captcha = generarCaptcha();
-  captchaInput.placeholder = `¿Cuánto es ${captcha.texto}?`;
+// Captchas
+let captchaLogin={},captchaRegister={};
+function generarCaptcha(){const a=Math.floor(Math.random()*9)+1,b=Math.floor(Math.random()*9)+1;return{a,b,resultado:a+b}}
+function refrescarCaptchaLogin(){captchaLogin=generarCaptcha();document.getElementById("captchaLabel").textContent=`¿Cuánto es ${captchaLogin.a} + ${captchaLogin.b}?`}
+function refrescarCaptchaRegistro(){captchaRegister=generarCaptcha();document.getElementById("regCaptchaLabel").textContent=`¿Cuánto es ${captchaRegister.a} + ${captchaRegister.b}?`}
+document.getElementById("refreshCaptcha").onclick=refrescarCaptchaLogin;
+document.getElementById("regRefresh").onclick=refrescarCaptchaRegistro;
+refrescarCaptchaLogin();refrescarCaptchaRegistro();
+
+// Modales
+const registerModal=document.getElementById("registerModal");
+const forgotModal=document.getElementById("forgotModal");
+document.getElementById("openRegister").onclick=()=>registerModal.style.display="flex";
+document.getElementById("closeRegister").onclick=()=>registerModal.style.display="none";
+document.getElementById("openForgot").onclick=()=>forgotModal.style.display="flex";
+document.getElementById("closeForgot").onclick=()=>forgotModal.style.display="none";
+
+// LOGIN
+document.getElementById("loginForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const correo=document.getElementById("correo").value;
+  const contrasena=document.getElementById("contrasena").value;
+  const captchaValor=document.getElementById("captchaInput").value;
+  const mensajeError=document.getElementById("mensaje-error");
+  if(parseInt(captchaValor)!==captchaLogin.resultado){
+    mensajeError.textContent="❌ Captcha incorrecto. Intenta de nuevo.";refrescarCaptchaLogin();return;
+  }
+  try{
+    const res=await fetch(`${SERVER_URL}/login`,{
+      method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({correo,contrasena})
+    });
+    const data=await res.json();
+    if(res.ok){localStorage.setItem("usuarioActivo",data.usuario||correo);window.location.href="gestion.html";}
+    else mensajeError.textContent=data.mensaje||"Correo o contraseña incorrectos.";
+  }catch{mensajeError.textContent="⚠️ Error al conectar con el servidor.";}
 });
 
-document.getElementById("loginForm").addEventListener("submit", async (e) => {
+// REGISTRO
+document.getElementById("registerForm").addEventListener("submit",async e=>{
   e.preventDefault();
-  const correo = document.getElementById("correo").value;
-  const contrasena = document.getElementById("contrasena").value;
-  const mensajeError = document.getElementById("mensaje-error");
+  const captchaValor=document.getElementById("regCaptchaInput").value;
+  const msg=document.getElementById("reg-message");
+  if(parseInt(captchaValor)!==captchaRegister.resultado){msg.textContent="❌ Captcha incorrecto.";refrescarCaptchaRegistro();return;}
+  const pass1=document.getElementById("regPassword").value;
+  const pass2=document.getElementById("regPassword2").value;
+  if(pass1!==pass2){msg.textContent="⚠️ Las contraseñas no coinciden.";return;}
 
-  if (parseInt(captchaInput.value) !== captcha.resultado) {
-    mensajeError.textContent = "❌ Captcha incorrecto. Intenta de nuevo.";
-    return;
-  }
+  const usuario={
+    nombre:document.getElementById("regNombre").value,
+    apellido:document.getElementById("regApellido").value,
+    celular:document.getElementById("regCelular").value,
+    direccion:document.getElementById("regDireccion").value,
+    correo:document.getElementById("regCorreo").value,
+    contrasena:pass1
+  };
 
-  try {
-    const res = await fetch(`${SERVER_URL}/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ correo, contrasena }),
+  try{
+    const res=await fetch(`${SERVER_URL}/register`,{
+      method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify(usuario)
     });
-    const data = await res.json();
-    if (res.ok) {
-      localStorage.setItem("usuarioActivo", data.usuario || correo);
-      window.location.href = "gestion.html";
-    } else {
-      mensajeError.textContent = data.mensaje || "Correo o contraseña incorrectos.";
-    }
-  } catch (error) {
-    mensajeError.textContent = "⚠️ Error al conectar con el servidor. Revisa IP/red o servidor.";
-  }
+    const data=await res.json();
+    if(res.ok){alert("✅ Registro exitoso. Ahora puedes iniciar sesión.");registerModal.style.display="none";}
+    else msg.textContent=data.mensaje||"Error al registrar.";
+  }catch{msg.textContent="Error de conexión con el servidor.";}
+});
+
+// ACTUALIZAR CONTRASEÑA
+document.getElementById("forgotForm").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const correo=document.getElementById("forgotCorreo").value;
+  const nueva=document.getElementById("forgotNueva").value;
+  const nueva2=document.getElementById("forgotNueva2").value;
+  const msg=document.getElementById("forgot-message");
+  if(nueva!==nueva2){msg.textContent="⚠️ Las contraseñas no coinciden.";return;}
+
+  try{
+    const res=await fetch(`${SERVER_URL}/update-password`,{
+      method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({correo,nueva})
+    });
+    const data=await res.json();
+    if(res.ok){alert("🔒 Contraseña actualizada correctamente.");forgotModal.style.display="none";}
+    else msg.textContent=data.mensaje||"Error al actualizar.";
+  }catch{msg.textContent="Error al conectar con el servidor.";}
 });
 </script>
 
