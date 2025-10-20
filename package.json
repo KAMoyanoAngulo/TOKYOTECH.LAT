@@ -1,9 +1,11 @@
 {
   "name": "tokyotech.lat",
   "version": "1.0.0",
-  "main": "index.js",
+  "type": "commonjs",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
   "keywords": [],
   "author": "",
@@ -12,9 +14,12 @@
     "@capacitor/android": "^7.4.3",
     "@capacitor/cli": "^6.2.1",
     "@capacitor/core": "^7.4.3",
+    "bcryptjs": "^3.0.2",
     "body-parser": "^2.2.0",
     "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
     "express": "^5.1.0",
+    "mongodb": "^6.20.0",
     "mongoose": "^8.19.1"
   },
   "description": ""

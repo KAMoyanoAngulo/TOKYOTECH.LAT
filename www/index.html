@@ -1,24 +1,223 @@
-<form id="loginForm">
-  <input type="email" id="correo" placeholder="Correo" required>
-  <input type="password" id="contrasena" placeholder="Contraseña" required>
-  <button type="submit">Iniciar sesión</button>
-</form>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Tokyotech</title>
+<link rel="stylesheet" href="css/style.css"/>
+<style>
+/* --- Diseño adaptable para móviles --- */
+:root {
+  --green: #2C9719;
+  --dark: #111;
+  --card: #222;
+}
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #1F1F21;
+  color: #fff;
+}
+.top-bar {
+  background: var(--green);
+  text-align: center;
+  padding: 8px;
+  font-weight: 700;
+}
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+}
+.logo {
+  height: 48px;
+}
+.hero {
+  background: url("imagenes/canva/FondoPantallaInicial.png") center/cover no-repeat;
+  height: 40vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.overlay {
+  text-align: center;
+}
+.login-container {
+  background: var(--card);
+  margin: 16px auto;
+  padding: 18px;
+  border-radius: 12px;
+  max-width: 420px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+}
+.login-container h2 {
+  margin-bottom: 6px;
+}
+input[type="email"], input[type="password"], input[type="text"] {
+  width: 100%;
+  padding: 12px;
+  margin: 8px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+.btn {
+  background: var(--green);
+  color: white;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: none;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+}
+.small-link {
+  text-align: center;
+  margin-top: 8px;
+}
+#mensaje-error {
+  color: #ff6b6b;
+  margin-top: 8px;
+  text-align: center;
+}
+/* responsive */
+@media (min-width:700px){
+  .hero{height:60vh;}
+}
+</style>
+</head>
+<body>
+
+<!-- 🔝 Barra superior -->
+<div class="top-bar">BIENVENIDO A TOKYO TECH</div>
+
+<!-- 🔧 Navbar -->
+<nav class="navbar">
+  <img src="imagenes/canva/LOGO VF.png" alt="logo" class="logo">
+  <div></div>
+</nav>
+
+<!-- 🏠 Pantalla principal -->
+<section class="hero">
+  <div class="overlay">
+    <h1 style="font-size:1.6rem;margin:0">Bienvenido a Tokyotech</h1>
+    <p style="margin:6px 0 12px">Tecnología que simplifica tu vida</p>
+    <a class="btn" href="#login-section" style="max-width:180px;margin:0 auto;display:inline-block">INICIAR</a>
+  </div>
+</section>
+
+<!-- 🔐 LOGIN -->
+<section id="login-section">
+  <div class="login-container" role="region" aria-label="login">
+    <img src="imagenes/canva/LOGO VF.png" class="logo-login" style="width:88px;display:block;margin:0 auto 8px">
+    <h2>Iniciar Sesión</h2>
+
+    <form id="loginForm" autocomplete="on">
+      <input id="correo" type="email" placeholder="Correo" required />
+      <input id="contrasena" type="password" placeholder="Contraseña" required />
+      <div style="display:flex;gap:8px;align-items:center">
+        <input id="captchaInput" type="text" placeholder="¿Cuánto es?" style="flex:1" required />
+        <button id="refreshCaptcha" type="button" style="padding:8px;border-radius:8px">↻</button>
+      </div>
+      <p id="mensaje-error"></p>
+      <button class="btn" type="submit">Iniciar sesión</button>
+    </form>
+
+    <div class="small-link">
+      <a href="#" id="openRegister" style="color:var(--green);">¿No tienes cuenta? Regístrate</a><br>
+      <a href="#" id="openForgot" style="color:#ccc">Olvidé mi contraseña</a>
+    </div>
+  </div>
+</section>
+
+<!-- 🧾 Registro -->
+<div id="registerModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);align-items:center;justify-content:center;padding:12px">
+  <div style="background:var(--card);padding:16px;border-radius:12px;max-width:420px;margin:0 auto">
+    <h3>Crear cuenta</h3>
+    <form id="registerForm">
+      <input id="regNombre" type="text" placeholder="Nombre completo" required />
+      <input id="regCorreo" type="email" placeholder="Correo" required />
+      <input id="regPassword" type="password" placeholder="Contraseña" required />
+      <div style="display:flex;gap:8px;align-items:center">
+        <input id="regCaptchaInput" type="text" placeholder="Captcha (suma)" style="flex:1" required />
+        <button id="regRefresh" type="button">↻</button>
+      </div>
+      <p id="reg-message" style="color:#ff6b6b"></p>
+      <button class="btn" type="submit">Registrarse y entrar</button>
+    </form>
+    <button id="closeRegister" style="margin-top:8px;background:#444;color:#fff;padding:8px;border-radius:8px;border:none">Cerrar</button>
+  </div>
+</div>
+
+<!-- 🔑 Recuperar contraseña -->
+<div id="forgotModal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);align-items:center;justify-content:center;padding:12px">
+  <div style="background:var(--card);padding:16px;border-radius:12px;max-width:420px;margin:0 auto">
+    <h3>Recuperar contraseña</h3>
+    <form id="forgotForm">
+      <input id="forgotCorreo" type="email" placeholder="Correo" required />
+      <p id="forgot-message" style="color:#ff6b6b"></p>
+      <button class="btn" type="submit">Enviar enlace (simulado)</button>
+    </form>
+    <button id="closeForgot" style="margin-top:8px;background:#444;color:#fff;padding:8px;border-radius:8px;border:none">Cerrar</button>
+  </div>
+</div>
 
 <script>
+/* ============================
+   CONFIGURACIÓN DEL SERVIDOR
+============================ */
+const SERVER_URL = "http://192.168.20.166:3000"; // 🔧 cambia esta IP por la tuya local o por la URL del backend
+
+/* ============================
+   CAPTCHA SIMPLE (suma)
+============================ */
+function generarCaptcha() {
+  const a = Math.floor(Math.random() * 10);
+  const b = Math.floor(Math.random() * 10);
+  return { texto: `${a} + ${b}`, resultado: a + b };
+}
+
+/* ============================
+   LOGIN
+============================ */
+let captcha = generarCaptcha();
+const captchaInput = document.getElementById("captchaInput");
+captchaInput.placeholder = `¿Cuánto es ${captcha.texto}?`;
+document.getElementById("refreshCaptcha").addEventListener("click", () => {
+  captcha = generarCaptcha();
+  captchaInput.placeholder = `¿Cuánto es ${captcha.texto}?`;
+});
+
 document.getElementById("loginForm").addEventListener("submit", async (e) => {
   e.preventDefault();
   const correo = document.getElementById("correo").value;
   const contrasena = document.getElementById("contrasena").value;
+  const mensajeError = document.getElementById("mensaje-error");
 
-  const res = await fetch("http://localhost:3000/login", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ correo, contrasena })
-  });
+  if (parseInt(captchaInput.value) !== captcha.resultado) {
+    mensajeError.textContent = "❌ Captcha incorrecto. Intenta de nuevo.";
+    return;
+  }
 
-  const text = await res.text();
-  alert(text);
-
-  if (res.ok) window.location.href = "gestion.html";
+  try {
+    const res = await fetch(`${SERVER_URL}/login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ correo, contrasena }),
+    });
+    const data = await res.json();
+    if (res.ok) {
+      localStorage.setItem("usuarioActivo", data.usuario || correo);
+      window.location.href = "gestion.html";
+    } else {
+      mensajeError.textContent = data.mensaje || "Correo o contraseña incorrectos.";
+    }
+  } catch (error) {
+    mensajeError.textContent = "⚠️ Error al conectar con el servidor. Revisa IP/red o servidor.";
+  }
 });
 </script>
+
+</body>
+</html>

@@ -1,32 +1,28 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Módulo de Gestión - Tokyotech</title>
-  <link rel="stylesheet" href="css/style.css">
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Panel - Tokyotech</title>
+<link rel="stylesheet" href="css/style.css"/>
+<style>
+body{background:#111;color:#fff;font-family:Arial}
+.top-bar{background:#2C9719;padding:8px;text-align:center;font-weight:700}
+.gestion-container{max-width:900px;margin:20px auto;padding:20px;background:#222;border-radius:12px}
+.btn{background:#2C9719;color:#fff;padding:8px;border:none;border-radius:8px}
+</style>
 </head>
 <body>
-  <div class="gestion-container">
-    <h2>Módulo de Gestión</h2>
-    <p>Bienvenido, <span id="nombre-usuario"></span></p>
-    <button class="btn" id="cerrarSesion">Cerrar Sesión</button>
-  </div>
-
-  <script>
-    const usuario = localStorage.getItem("usuarioActivo");
-
-    if (!usuario) {
-      // Si no hay usuario, vuelve al login
-      window.location.href = "index.html";
-    } else {
-      document.getElementById("nombre-usuario").textContent = usuario;
-    }
-
-    document.getElementById("cerrarSesion").addEventListener("click", function() {
-      localStorage.removeItem("usuarioActivo");
-      window.location.href = "index.html";
-    });
-  </script>
+<div class="top-bar" id="topBar">Módulo de Gestión</div>
+<div class="gestion-container">
+  <h2>Panel de gestión</h2>
+  <p>Bienvenido, <span id="nombre-usuario"></span></p>
+  <button id="cerrarSesion" class="btn">Cerrar sesión</button>
+</div>
+<script>
+const user = localStorage.getItem('usuarioActivo');
+if(!user) { location.href='index.html'; }
+document.getElementById('nombre-usuario').textContent = user;
+document.getElementById('cerrarSesion').addEventListener('click', ()=> { localStorage.removeItem('usuarioActivo'); location.href='index.html';});
+</script>
 </body>
 </html>
